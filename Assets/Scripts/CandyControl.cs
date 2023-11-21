@@ -14,6 +14,9 @@ public class CandyControl : MonoBehaviour
     private float timer = 0f;
     private float incrementInterval = 1f; // Increment the counter every 1 second
 
+    public AudioSource speaker;
+    public AudioClip soundEffect;
+
 
     void Update()
     {
@@ -36,6 +39,7 @@ public class CandyControl : MonoBehaviour
                 if (currentCount < maxCount)
                 {
                     currentCount++;
+                    speaker.PlayOneShot(soundEffect);
                     UpdateCounterUI();
                 }
             }
