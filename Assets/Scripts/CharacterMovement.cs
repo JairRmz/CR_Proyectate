@@ -12,6 +12,7 @@ public class CharacterMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movement;
     private int remainingDashes;
+    private Animator playerAnimator;
 
     public TextMeshProUGUI dashText; // Reference to your UI TextMeshPro element
 
@@ -21,15 +22,22 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerAnimator = GetComponent<Animator>();
         remainingDashes = maxDashes;
         UpdateDashText();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
+        movement = new Vector2(moveX, moveY).normalized;
+
+        playerAnimator.SetFloat("Horizontal", moveX);
+        playerAnimator.SetFloat("Vertical", moveY);
+        playerAnimator.SetFloat("Speed", movement.sqrMagnitude);
 
         // Check for dash input
         if (Input.GetKeyDown(KeyCode.Space) && remainingDashes > 0 && !isDashing)
