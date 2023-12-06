@@ -20,6 +20,8 @@ public class CandyControl : MonoBehaviour
 
     void Update()
     {
+
+        currentCount = int.Parse(counterText.text);
         // Increment the timer
         timer += Time.deltaTime;
 

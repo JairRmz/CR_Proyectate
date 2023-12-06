@@ -13,7 +13,7 @@ public class Timer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        contadorTiempo = 120; // Initialize contadorTiempo to zero when the scene starts
+        contadorTiempo = 300; // Initialize contadorTiempo to zero when the scene starts
     }
 
     // Update is called once per frame

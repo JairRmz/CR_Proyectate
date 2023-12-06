@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -8,6 +7,7 @@ public class CharacterMovement : MonoBehaviour
     public float speed = 5f;
     public float dashDistance = 5f;
     public int maxDashes = 3;
+    public float dashRegenerationTime = 15f;
 
     private Rigidbody2D rb;
     private Vector2 movement;
@@ -25,7 +25,7 @@ public class CharacterMovement : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         remainingDashes = maxDashes;
         UpdateDashText();
-
+        StartCoroutine(DashRegeneration());
     }
 
     // Update is called once per frame
@@ -73,6 +73,20 @@ public class CharacterMovement : MonoBehaviour
         UpdateDashText();
         yield return new WaitForSeconds(1f); // Cooldown between dashes
         isDashing = false;
+    }
+
+    IEnumerator DashRegeneration()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(dashRegenerationTime);
+
+            if (remainingDashes < maxDashes)
+            {
+                remainingDashes++;
+                UpdateDashText();
+            }
+        }
     }
 
     void UpdateDashText()
